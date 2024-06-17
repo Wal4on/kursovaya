@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Loans</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+    <h1>Loans</h1>
+    <form th:action="@{/loans/add}" method="post">
+        <select name="bookId">
+            <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}">Book Title</option>
+        </select>
+        <select name="memberId">
+            <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.name}">Member Name</option>
+        </select>
+        <input type="date" name="loanDate" placeholder="Loan Date" />
+        <input type="date" name="returnDate" placeholder="Return Date" />
+        <button type="submit">Add Loan</button>
+    </form>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Loan Date</th>
+            <th>Return Date</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="loan : ${loans}">
+            <td th:text="${loan.id}">1</td>
+            <td th:text="${loan.book.title}">Book Title</td>
+            <td th:text="${loan.member.name}">Member Name</td>
+            <td th:text="${loan.loanDate}">Loan Date</td>
+            <td th:text="${loan.returnDate}">Return Date</td>
+            <td>
+                <form th:action="@{/loans/delete/{id}(id=${loan.id})}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
